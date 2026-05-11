@@ -7,13 +7,19 @@ import TaskList from "./components/TaskList";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchTasks = async () => {
     try {
+      setLoading(true);
+
       const res = await API.get("/");
+
       setTasks(res.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -22,45 +28,75 @@ function App() {
   }, []);
 
   const addTask = async (title) => {
-    const res = await API.post("/", { title });
+    try {
+      const res = await API.post("/", { title });
 
-    setTasks([res.data, ...tasks]);
+      setTasks([res.data, ...tasks]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const deleteTask = async (id) => {
-    await API.delete(`/${id}`);
+    try {
+      await API.delete(`/${id}`);
 
-    setTasks(tasks.filter((task) => task._id !== id));
+      setTasks(tasks.filter((task) => task._id !== id));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const toggleComplete = async (task) => {
-    const res = await API.put(`/${task._id}`, {
-      completed: !task.completed,
-    });
+    try {
+      const res = await API.put(`/${task._id}`, {
+        completed: !task.completed,
+      });
 
-    setTasks(
-      tasks.map((t) => (t._id === task._id ? res.data : t))
-    );
+      setTasks(
+        tasks.map((t) => (t._id === task._id ? res.data : t))
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateTask = async (title) => {
-    const res = await API.put(`/${editingTask._id}`, {
-      title,
-    });
+    try {
+      const res = await API.put(`/${editingTask._id}`, {
+        title,
+      });
 
-    setTasks(
-      tasks.map((task) =>
-        task._id === editingTask._id ? res.data : task
-      )
-    );
+      setTasks(
+        tasks.map((task) =>
+          task._id === editingTask._id ? res.data : task
+        )
+      );
 
-    setEditingTask(null);
+      setEditingTask(null);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="app">
+        <div className="container">
+          <h2 style={{ textAlign: "center" }}>Loading...</h2>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="app">
       <div className="container">
         <h1>Task Manager</h1>
+
+        <p className="task-count">
+          Total Tasks: {tasks.length}
+        </p>
 
         <TaskForm
           addTask={addTask}
