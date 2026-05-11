@@ -24,21 +24,25 @@ Backend:
 - Mongoose
 
 ## Live Demo
-Frontend: YOUR_VERCEL_LINK
+Frontend: https://ap-mobility-30n5dljl1-pruthi-shivins-projects.vercel.app/
 
 Backend API:
-YOUR_RENDER_LINK/api/tasks
+https://apmobility.onrender.com/api/tasks
 
 ## Installation
 
 ### Backend
 cd backend
+
 npm install
+
 npm run dev
 
 ### Frontend
 cd frontend
+
 npm install
+
 npm run dev
 
 ## API Endpoints
