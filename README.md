@@ -23,6 +23,13 @@ Backend:
 - MongoDB
 - Mongoose
 
+## Environment Variables
+
+Create a `.env` file inside backend folder:
+
+MONGO_URI=your_mongodb_connection_string
+PORT=5000
+
 ## Live Demo
 Frontend: https://ap-mobility-30n5dljl1-pruthi-shivins-projects.vercel.app/
 
