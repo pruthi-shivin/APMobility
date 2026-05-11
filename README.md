@@ -28,6 +28,7 @@ Backend:
 Create a `.env` file inside backend folder:
 
 MONGO_URI=your_mongodb_connection_string
+
 PORT=5000
 
 ## Live Demo
